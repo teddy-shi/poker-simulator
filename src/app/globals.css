@@ -2,10 +2,8 @@
 
 :root { color-scheme: dark; --bg: #101715; --line: #2c3731; --text: #edf0e9; --accent: #c5df94; }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: Arial, Helvetica, sans-serif; font-size: 16px; -webkit-font-smoothing: antialiased; }
-button { -webkit-tap-highlight-color: transparent; }
-button { font: inherit; }
+button { font: inherit; -webkit-tap-highlight-color: transparent; }
 button:not(:disabled) { cursor: pointer; }
 button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .main-content { width: 100%; padding: 40px clamp(12px, 2vw, 40px) 0; }
@@ -13,8 +11,7 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .table-format { font-size: 13px; color: #c2cdc4; padding: 10px 15px; border: 1px solid var(--line); border-radius: 7px; }
 .table-format span { margin: 0 10px; color: #58695c; }
 .simulation-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; margin-top: 26px; }
-.table-panel { background: radial-gradient(ellipse at 50% 45%, #253029 0%, #18211d 65%); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
-.table-panel-top { padding: 20px 24px; }
+.table-panel { padding-top: 40px; background: radial-gradient(ellipse at 50% 45%, #253029 0%, #18211d 65%); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
 .table-scene { position: relative; min-height: max(520px, calc(100svh - 230px)); margin: 0 clamp(12px, 2vw, 40px); flex: 1; }
 .poker-table { position: absolute; inset: clamp(70px, 9svh, 110px) clamp(30px, 5vw, 100px); border-radius: 48% / 50%; background: #232a23; padding: 15px; border: 2px solid #414738; box-shadow: 0 16px 30px #0006, inset 0 0 0 5px #191f1a, 0 0 0 1px #0b130e; }
 .felt-inset { width: 100%; height: 100%; border-radius: inherit; position: relative; border: 1px solid #70907852; background: radial-gradient(ellipse at 50% 40%, #286047, #164c35 80%); box-shadow: inset 0 4px 14px #082919aa; }
@@ -25,16 +22,17 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .empty-card { width: clamp(56px, 6vw, 116px); aspect-ratio: 5/7; border: 1px dashed #a6c4a359; border-radius: 5px; background: #092f2221; display: grid; place-items: center; }
 .empty-card span { color: #a5bfa156; font-weight: 300; font-size: 20px; }
 .table-seat { position: absolute; width: clamp(138px, 12vw, 190px); display: flex; align-items: center; flex-direction: column; transform: translate(-50%, -50%); z-index: 1; }
-.seat-top { left: 50%; top: clamp(60px, 9svh, 90px); }
 .seat-upper-right { left: 86%; top: 28%; }
-.seat-lower-right { left: 86%; top: 74%; }
-.seat-bottom { left: 50%; top: calc(100% - clamp(60px, 9svh, 90px)); }
-.seat-lower-left { left: 14%; top: 74%; }
+.seat-lower-right { left: 86%; top: 60%; }
+.seat-bottom-right { left: 66%; top: calc(100% - clamp(60px, 9svh, 90px)); }
+.seat-bottom-left { left: 34%; top: calc(100% - clamp(60px, 9svh, 90px)); }
+.seat-lower-left { left: 14%; top: 60%; }
 .seat-upper-left { left: 14%; top: 28%; }
 .seat-cards { display: flex; gap: 3px; margin-bottom: -7px; }
-.seat-cards .playing-card { width: clamp(48px, 4.2vw, 82px); border-radius: 5px; }
-.seat-cards .playing-card:first-child { transform: rotate(-9deg); }
-.seat-cards .playing-card:last-child { transform: rotate(9deg); }
+.dealt-card { display: inline-block; position: relative; flex-shrink: 0; width: clamp(48px, 4.2vw, 82px); transform-origin: center; }
+.dealt-card .playing-card { border-radius: 5px; }
+.dealt-card:first-child .playing-card { transform: rotate(-9deg); }
+.dealt-card:last-child .playing-card { transform: rotate(9deg); }
 .seat-label { width: 100%; display: flex; align-items: center; gap: 8px; padding: 9px; background: #1d2922; border: 1px solid #435044; box-shadow: 0 4px 8px #0003; border-radius: 7px; position: relative; }
 .seat-label b { display: block; font-size: 12px; font-weight: 500; }
 .seat-avatar { display: grid; place-items: center; width: 29px; height: 29px; border-radius: 50%; background: #2c3930; color: #8da18f; font-size: 10px; border: 1px solid #47584a; }
@@ -52,9 +50,6 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 .corner-bottom { inset: auto 7% 5% auto; transform: rotate(180deg); }
 .card-center { position: absolute; inset: 23% 23%; display: grid; place-items: center; }
 .card-suit-symbol { font-size: 57cqw; line-height: 1; }
-.card-back { background: repeating-linear-gradient(45deg, #30483d 0 2px, #264034 2px 5px); border: 3px solid #deded0; outline: 1px solid #264034; color: #c3cca8; display: inline-grid; place-items: center; }
-.card-back::after { content: ""; position: absolute; inset: 7%; border: 1px solid #c5d2ac60; border-radius: 3%; }
-.back-emblem { font-size: 43cqw; }
 
 @media (max-width: 1100px) {
   .simulation-layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
@@ -74,25 +69,39 @@ button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
   .section-heading { align-items: flex-start; flex-direction: column; gap: 15px; }
   .table-format { font-size: 11px; padding: 8px 10px; }
   .simulation-layout { margin-top: 18px; }
-  .table-panel-top { padding: 17px 15px; }
+  .table-panel { padding-top: 34px; }
   .table-scene { margin: 0; }
   .poker-table { inset: 60px 25px; border-radius: 45% / 38%; padding: 11px; }
   .felt-inset::before { inset: 9px; }
   .table-seat { width: 100px; }
   .seat-upper-left { left: 16%; top: 28%; }
   .seat-upper-right { left: 84%; top: 28%; }
-  .seat-lower-left { left: 16%; top: 74%; }
-  .seat-lower-right { left: 84%; top: 74%; }
+  .seat-lower-left { left: 16%; top: 60%; }
+  .seat-lower-right { left: 84%; top: 60%; }
   .seat-avatar { width: 20px; height: 20px; font-size: 8px; }
   .seat-label { padding: 6px; gap: 5px; }
   .seat-label b { font-size: 10px; }
-  .seat-cards .playing-card { width: clamp(36px, 8vw, 44px); }
+  .dealt-card { width: clamp(36px, 8vw, 44px); }
   .community-cards { gap: 4px; }
   .community-cards .empty-card { width: clamp(35px, 10vw, 54px); }
   .pot-label { font-size: 8px; letter-spacing: 1.5px; }
   .table-footer { padding: 15px; }
   .simulation-button { width: 100%; justify-content: center; }
 }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+
+.shuffle-button { border: 1px solid #65774e; background: var(--accent); color: #25321e; padding: 12px 20px; border-radius: 6px; font-size: 14px; min-width: 170px; }
+.shuffle-button:hover:not(:disabled) { background: #d7edaf; }
+.shuffle-button:disabled { opacity: .65; cursor: wait; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (max-width: 550px) {
+  .shuffle-button { width: 100%; }
 }
+
+.dealer-station { position: absolute; top: 0; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.dealer-identity { display: flex; align-items: center; gap: 9px; color: #7d8781; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+.dealer-identity svg { width: 32px; height: 32px; }
+.dealer-deck-zone { opacity: 0; pointer-events: none; width: clamp(120px, 14vw, 200px); height: clamp(80px, 9vw, 130px); display: grid; place-items: center; border: 1px dashed #c5df9440; border-radius: 50%; background: #10171530; }
+.dealer-deck-zone > span { color: #c5df9450; font-size: 25px; }
+
+.table-scene[data-phase="shuffling"] .dealer-identity { color: var(--accent); }
+.table-scene[data-phase="shuffling"] .dealer-deck-zone { opacity: 1; }
