@@ -4,7 +4,7 @@ import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "Poker Simulator",
-  description: "Poker simulation project scaffold.",
+  description: "",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
