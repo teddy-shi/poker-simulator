@@ -1,0 +1,58 @@
+.playing-card {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  aspect-ratio: 5/7;
+  border-radius: 6%;
+  background: #f7f5ed;
+  border: 1px solid #e4e0d2;
+  box-shadow: 0 2px 3px #0003;
+  color: #182c27;
+  container-type: inline-size;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.card-red {
+  color: #b83d43;
+}
+
+.card-corner {
+  position: absolute;
+  left: 7%;
+  top: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Georgia, serif;
+  line-height: .95;
+  font-size: 22cqw;
+  letter-spacing: -1px;
+}
+
+.card-corner b {
+  font-weight: 600;
+}
+
+.card-corner > span {
+  font-size: 17cqw;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.corner-bottom {
+  inset: auto 7% 5% auto;
+  transform: rotate(180deg);
+}
+
+.card-center {
+  position: absolute;
+  inset: 23% 23%;
+  display: grid;
+  place-items: center;
+}
+
+.card-suit-symbol {
+  font-size: 57cqw;
+  line-height: 1;
+}

@@ -2,35 +2,18 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
-import { DECK, type Card } from "@/lib/poker/cards";
+import type { Card, SeatHand } from "@/lib/poker/cards";
+import { PREVIEW_DECK, PREVIEW_HANDS, SEAT_COUNT } from "@/lib/poker/preview-hand";
 import { useShuffleDeck } from "@/hooks/use-shuffle-deck";
 
 type Phase = "idle" | "collecting" | "shuffling" | "dealing";
-export type SeatHand = readonly [Card, Card];
-
-const SEAT_COUNT = 6;
-const INITIAL_HANDS: readonly SeatHand[] = Array.from(
-  { length: SEAT_COUNT },
-  (_, seat): SeatHand => [DECK[seat * 8], DECK[seat * 8 + 1]],
-);
-
-// Preserve the existing preview hands in round-robin deal order.
-const previewCards = [
-  ...INITIAL_HANDS.map((hand) => hand[0]),
-  ...INITIAL_HANDS.map((hand) => hand[1]),
-];
-const previewCardIds = new Set(previewCards.map((card) => card.id));
-const PREVIEW_DECK: readonly Card[] = Object.freeze([
-  ...previewCards,
-  ...DECK.filter((card) => !previewCardIds.has(card.id)),
-]);
-
 /** Presentation trigger; the shuffle hook controls the actual card order. */
 export function useTableRedeal() {
   const shuffleDeck = useShuffleDeck();
-  const [hands, setHands] = useState(INITIAL_HANDS);
+  const [hands, setHands] = useState(PREVIEW_HANDS);
   const [phase, setPhase] = useState<Phase>("idle");
   const [error, setError] = useState<string | null>(null);
+  const deckRef = useRef<readonly Card[]>(PREVIEW_DECK);
   const sceneRef = useRef<HTMLDivElement>(null);
   const mounted = useRef(false);
   const inFlight = useRef<Promise<void> | null>(null);
@@ -54,6 +37,7 @@ export function useTableRedeal() {
     const performRedeal = async () => {
       setError(null);
       const deck = shuffleDeck(PREVIEW_DECK);
+      deckRef.current = deck;
       // Deal one card to each seat, then a second card to each seat.
       const nextHands = Array.from(
         { length: SEAT_COUNT },
@@ -145,5 +129,5 @@ export function useTableRedeal() {
     return run;
   }, [shuffleDeck]);
 
-  return { hands, phase, error, sceneRef, shuffleAndRedeal, isRedealing: phase !== "idle" };
+  return { hands, phase, error, sceneRef, deckRef, shuffleAndRedeal, isRedealing: phase !== "idle" };
 }

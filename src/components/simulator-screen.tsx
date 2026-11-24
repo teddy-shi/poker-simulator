@@ -1,7 +1,9 @@
 "use client";
 
 import { PlayingCard } from "@/components/playing-card";
-import { useTableRedeal, type SeatHand } from "@/hooks/use-table-redeal";
+import { useTableRedeal } from "@/hooks/use-table-redeal";
+import { useHandPlayback } from "@/hooks/use-hand-playback";
+import type { SeatHand } from "@/lib/poker/cards";
 
 function Seat({ number, position, cards }: { number: number; position: string; cards: SeatHand }) {
   return (
@@ -40,8 +42,10 @@ function DealerStation() {
 }
 
 export function SimulatorScreen() {
-  const { hands, phase, error, sceneRef, shuffleAndRedeal, isRedealing } = useTableRedeal();
-  const phaseLabel = { idle: "Shuffle & redeal", collecting: "Collecting cards…", shuffling: "Shuffling…", dealing: "Dealing…" }[phase];
+  const { hands, phase, error, sceneRef, deckRef, shuffleAndRedeal, isRedealing } = useTableRedeal();
+  const hand = useHandPlayback({ sceneRef, deckRef, shuffleAndRedeal });
+  const isBusy = isRedealing || hand.isPlaying;
+  const phaseLabel = { idle: "Cards ready.", collecting: "Collecting cards…", shuffling: "Shuffling…", dealing: "Dealing…" }[phase];
 
   return (
     <main className="main-content">
@@ -51,17 +55,32 @@ export function SimulatorScreen() {
         </div>
         <div className="simulation-layout">
           <div className="table-panel">
-            <div className="table-scene" ref={sceneRef} data-phase={phase} aria-busy={isRedealing}>
+            <div className="table-scene" ref={sceneRef} data-phase={phase} aria-busy={isBusy}>
               <div className="poker-table">
                 <div className="felt-inset">
                   <div className="board-area">
                     <div className="pot-label">COMMUNITY CARDS</div>
                     <div className="community-cards">
-                      {/* TODO: Render community cards from simulation state when the engine is implemented. */}
-                      {["Flop card 1", "Flop card 2", "Flop card 3", "Turn", "River"].map((label) => (
-                        <div key={label} className="empty-card" role="img" aria-label={`${label}: empty`}><span aria-hidden="true">+</span></div>
+                      {["Flop card 1", "Flop card 2", "Flop card 3", "Turn", "River"].map((label, slot) => (
+                        <div className="board-slot" key={label}>
+                          {hand.board[slot] ? (
+                            <span className="hand-card" data-hand-card={`board-${slot}`}><PlayingCard card={hand.board[slot]} /></span>
+                          ) : (
+                            <div className="empty-card" role="img" aria-label={`${label}: empty`}><span aria-hidden="true">+</span></div>
+                          )}
+                        </div>
                       ))}
                     </div>
+                    {hand.burns.length > 0 && (
+                      <div className="burn-area" aria-label="Burn pile">
+                        <div className="burn-pile">
+                          {hand.burns.map((card, slot) => (
+                            <span className="hand-card" data-hand-card={`burn-${slot}`} key={card.id}><PlayingCard card={card} /></span>
+                          ))}
+                        </div>
+                        <span className="burn-label">{hand.burns.length}/3 burned</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -74,13 +93,11 @@ export function SimulatorScreen() {
               <Seat cards={hands[5]} number={6} position="upper-left" />
             </div>
             <div className="table-footer">
-              {/* TODO: Wire Run simulation to the engine and await shuffleAndRedeal() after each run.
-                  Remove the temporary shuffle button once that integration is ready. */}
-              <button className="simulation-button" disabled title="Simulation functionality is not implemented yet"><span>▷</span> Run simulation <span className="soon-label">SOON</span></button>
-              <button className="shuffle-button" type="button" onClick={() => void shuffleAndRedeal()} disabled={isRedealing}>
-                {phaseLabel}
+              {/* TODO: Connect Simulate hand to your simulation engine and its per-hand completion callback. */}
+              <button className="simulation-button" type="button" onClick={() => void hand.simulateHand()} disabled={isBusy}>
+                {hand.isPlaying ? hand.status : "Simulate hand"}
               </button>
-              <span className="visually-hidden" role="status">{error ?? (isRedealing ? phaseLabel : "Cards ready.")}</span>
+              <span className="visually-hidden" role="status">{hand.error ?? error ?? (isRedealing ? phaseLabel : hand.status)}</span>
             </div>
           </div>
         </div>

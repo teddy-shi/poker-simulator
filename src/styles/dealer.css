@@ -1,0 +1,51 @@
+.dealer-station {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.dealer-identity {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #7d8781;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.dealer-identity svg {
+  width: 32px;
+  height: 32px;
+}
+
+.dealer-deck-zone {
+  opacity: 0;
+  pointer-events: none;
+  width: clamp(120px, 14vw, 200px);
+  height: clamp(80px, 9vw, 130px);
+  display: grid;
+  place-items: center;
+  border: 1px dashed #c5df9440;
+  border-radius: 50%;
+  background: #10171530;
+}
+
+.dealer-deck-zone > span {
+  color: #c5df9450;
+  font-size: 25px;
+}
+
+.table-scene[data-phase="shuffling"] .dealer-identity {
+  color: var(--accent);
+}
+
+.table-scene[data-phase="shuffling"] .dealer-deck-zone {
+  opacity: 1;
+}

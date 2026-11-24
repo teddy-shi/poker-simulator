@@ -5,6 +5,8 @@ export type Suit = (typeof SUITS)[number];
 export type Rank = (typeof RANKS)[number];
 export type Card = Readonly<{ id: `${Rank}-${Suit}`; rank: Rank; suit: Suit }>;
 
+export type SeatHand = readonly [Card, Card];
+
 export const SUIT_DETAILS = {
   spades: { symbol: "♠", name: "Spades", color: "black" },
   hearts: { symbol: "♥", name: "Hearts", color: "red" },

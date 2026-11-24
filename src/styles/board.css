@@ -1,0 +1,100 @@
+.board-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pot-label {
+  position: absolute;
+  bottom: calc(100% + 13px);
+  white-space: nowrap;
+  font-size: 9px;
+  letter-spacing: 2.6px;
+  color: #c1d1b7ad;
+}
+
+.community-cards {
+  display: flex;
+  gap: clamp(6px, .8vw, 16px);
+}
+
+.empty-card {
+  width: 100%;
+  aspect-ratio: 5/7;
+  border: 1px dashed #a6c4a359;
+  border-radius: 5px;
+  background: #092f2221;
+  display: grid;
+  place-items: center;
+}
+
+.empty-card span {
+  color: #a5bfa156;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+@media (max-width: 550px) {
+  .community-cards {
+    gap: 4px;
+  }
+
+  .pot-label {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+}
+
+.board-slot {
+  flex-shrink: 0;
+  width: clamp(56px, 6vw, 116px);
+  aspect-ratio: 5/7;
+}
+
+.hand-card {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5/7;
+}
+
+.burn-area {
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.burn-pile {
+  display: grid;
+  grid-template-columns: repeat(3, clamp(48px, 4.2vw, 82px));
+  gap: clamp(6px, .8vw, 12px);
+}
+
+.burn-label {
+  color: #c1d1b7;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+@media (max-width: 550px) {
+  .board-slot {
+    width: clamp(35px, 10vw, 54px);
+  }
+
+  .burn-area {
+    top: calc(100% + 12px);
+  }
+
+  .burn-pile {
+    grid-template-columns: repeat(3, clamp(40px, 10vw, 54px));
+  }
+}

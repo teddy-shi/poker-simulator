@@ -1,0 +1,166 @@
+.table-seat {
+  position: absolute;
+  width: clamp(138px, 12vw, 190px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.seat-upper-right {
+  left: 86%;
+  top: 28%;
+}
+
+.seat-lower-right {
+  left: 86%;
+  top: 60%;
+}
+
+.seat-bottom-right {
+  left: 66%;
+  top: calc(100% - clamp(60px, 9svh, 90px));
+}
+
+.seat-bottom-left {
+  left: 34%;
+  top: calc(100% - clamp(60px, 9svh, 90px));
+}
+
+.seat-lower-left {
+  left: 14%;
+  top: 60%;
+}
+
+.seat-upper-left {
+  left: 14%;
+  top: 28%;
+}
+
+.seat-cards {
+  display: flex;
+  gap: 3px;
+  margin-bottom: -7px;
+}
+
+.dealt-card {
+  display: inline-block;
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(48px, 4.2vw, 82px);
+}
+
+.dealt-card .playing-card {
+  border-radius: 5px;
+}
+
+.dealt-card:first-child .playing-card {
+  transform: rotate(-9deg);
+}
+
+.dealt-card:last-child .playing-card {
+  transform: rotate(9deg);
+}
+
+.seat-label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px;
+  background: #1d2922;
+  border: 1px solid #435044;
+  box-shadow: 0 4px 8px #0003;
+  border-radius: 7px;
+}
+
+.seat-label b {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.seat-avatar {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  background: #2c3930;
+  color: #8da18f;
+  font-size: 10px;
+  border: 1px solid #47584a;
+}
+
+@media (max-width: 1100px) {
+  .seat-label {
+    gap: 6px;
+    padding: 7px;
+  }
+
+  .seat-avatar {
+    width: 23px;
+    height: 23px;
+  }
+
+  .seat-label b {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 850px) {
+  .seat-label b {
+    font-size: 12px;
+  }
+
+  .seat-avatar {
+    width: 29px;
+    height: 29px;
+  }
+}
+
+@media (max-width: 550px) {
+  .table-seat {
+    width: 100px;
+  }
+
+  .seat-upper-left {
+    left: 16%;
+    top: 28%;
+  }
+
+  .seat-upper-right {
+    left: 84%;
+    top: 28%;
+  }
+
+  .seat-lower-left {
+    left: 16%;
+    top: 60%;
+  }
+
+  .seat-lower-right {
+    left: 84%;
+    top: 60%;
+  }
+
+  .seat-avatar {
+    width: 20px;
+    height: 20px;
+    font-size: 8px;
+  }
+
+  .seat-label {
+    padding: 6px;
+    gap: 5px;
+  }
+
+  .seat-label b {
+    font-size: 10px;
+  }
+
+  .dealt-card {
+    width: clamp(36px, 8vw, 44px);
+  }
+}
