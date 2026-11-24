@@ -1,0 +1,1 @@
+I love playing poker, and I also love watching poker hands being played. I have the worst luck with premium hands, so I wanna just see how different positions, card harnds, and boards, run out over time.
